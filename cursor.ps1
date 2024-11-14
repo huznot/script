@@ -35,10 +35,15 @@ function Show-RandomMessageBox {
 
     $form.Show()
 
+    $random = New-Object System.Random
+
     while ($form.Visible) {
-        $random = New-Object System.Random
-        $xPos = $random.Next(0, $screenWidth - 300)
-        $yPos = $random.Next(0, $screenHeight - 200)
+        $cursorPos = [System.Windows.Forms.Cursor]::Position
+        $xPos = $cursorPos.X + $random.Next(50, 200)
+        $yPos = $cursorPos.Y + $random.Next(50, 200)
+
+        if ($xPos -gt $screenWidth - 300) { $xPos = $screenWidth - 300 }
+        if ($yPos -gt $screenHeight - 200) { $yPos = $screenHeight - 200 }
 
         $form.Location = New-Object System.Drawing.Point($xPos, $yPos)
 
